@@ -4,7 +4,8 @@ Code for Shiny app to explore English data on the age distribution of confirmed 
 [global.R](https://github.com/VictimOfMaths/COVID_Cases_By_Age/blob/main/global.R) processes the latest age-specific case data from Public Health England, 
 [ui.R](https://github.com/VictimOfMaths/COVID_Cases_By_Age/blob/main/ui.R) contains the code for the app itself and [server.R](https://github.com/VictimOfMaths/COVID_Cases_By_Age/blob/main/server.R) contains the code to produce the various plots.
 <br><br>
-Suggested citation if you want to use any of the plots produced by this app: Angus, Colin (2020): COVID-19 Local Authority Case Date By Age. The University of Sheffield. Online resource. https://doi.org/10.15131/shef.data.13158122
+Suggested citation if you want to use any of the plots produced by this app: Angus, Colin (2020): COVID-19 Local Authority Case Date By Age. The University of Sheffield. Online resource. https://doi.org/10.15131/shef.data.13158122<br><br>
+Some example plots from the app:<br>
 ![Image 1](https://github.com/VictimOfMaths/COVID_Cases_By_Age/blob/main/COVIDCasesxAge1.png)<br>
 ![Image 2](https://github.com/VictimOfMaths/COVID_Cases_By_Age/blob/main/COVIDCasesxAge2.png)<br>
 ![Image 3](https://github.com/VictimOfMaths/COVID_Cases_By_Age/blob/main/COVIDCasesxAge3.png)<br>
