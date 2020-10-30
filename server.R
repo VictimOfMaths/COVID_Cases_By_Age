@@ -25,7 +25,7 @@ server <- function(input, output) {
         theme(plot.title=element_text(face="bold"))+
         labs(title=paste("Age patterns in COVID-19 cases in", LA),
              subtitle="Rolling 7-day average of confirmed new cases by age group",
-             caption="Date from Public Health England | Plot by @VictimOfMaths")
+             caption="Data from Public Health England | Plot by @VictimOfMaths\nDOI: 10.15131/shef.data.13158122")
     }
     
     if (input$plottype == 2){
@@ -40,38 +40,44 @@ server <- function(input, output) {
         theme(plot.title=element_text(face="bold"))+
         labs(title=paste("Age patterns in COVID-19 cases in", LA),
              subtitle="Rolling 7-day average rate per 100,000 of confirmed new cases by age group",
-             caption="Date from Public Health England | Plot by @VictimOfMaths")
+             caption="Data from Public Health England | Plot by @VictimOfMaths\nDOI: 10.15131/shef.data.13158122")
     }
     
     if (input$plottype == 3){
+      plotlabel<- if_else(input$scale=="Log", "Daily cases per 100,000 (log scale)",
+                          "Daily cases per 100,000")
+      scaletype <- if_else(input$scale=="Log", "log2", "identity")
       p <- data %>% 
         filter(areaType=="ltla" & areaName==LA & !is.na(caserateroll)) %>% 
         ggplot()+
         geom_line(aes(x=date, y=caserateroll, colour=age))+
         scale_colour_paletteer_d("pals::stepped", name="Age")+
         scale_x_date(name="", limits=c(StartDate, NA))+
-        scale_y_continuous(name=" Daily cases per 100,000")+
+        scale_y_continuous(name=plotlabel, position="right", trans=scaletype)+
         theme_classic()+
         theme(plot.title=element_text(face="bold"))+
         guides(colour=guide_legend(ncol=2, byrow=TRUE))+
         labs(title=paste("Age patterns in COVID-19 cases in", LA),
              subtitle="Rolling 7-day average rate per 100,000 of confirmed new cases by age group",
-             caption="Date from Public Health England | Plot by @VictimOfMaths")
+             caption="Data from Public Health England | Plot by @VictimOfMaths\nDOI: 10.15131/shef.data.13158122")
     }
     
     if (input$plottype == 4){
+      plotlabel<- if_else(input$scale=="Log", "Daily cases per 100,000 (log scale)",
+                          "Daily cases per 100,000")
+      scaletype <- if_else(input$scale=="Log", "log2", "identity")
       p <-shortdata %>% 
         filter(areaType=="ltla" & areaName==LA & !is.na(caserateroll)) %>% 
         ggplot()+
         geom_line(aes(x=date, y=caserateroll, colour=ageband))+
         scale_colour_paletteer_d("awtools::a_palette", name="Age")+
         scale_x_date(name="", limits=c(StartDate, NA))+
-        scale_y_continuous(name=" Daily cases per 100,000")+
+        scale_y_continuous(name=plotlabel, position="right", trans=scaletype)+
         theme_classic()+
         theme(plot.title=element_text(face="bold"))+
         labs(title=paste("Age patterns in COVID-19 cases in", LA),
              subtitle="Rolling 7-day average rate per 100,000 of confirmed new cases by age group",
-             caption="Date from Public Health England | Plot by @VictimOfMaths") 
+             caption="Data from Public Health England | Plot by @VictimOfMaths\nDOI: 10.15131/shef.data.13158122") 
     }
     
     if (input$plottype == 5){
@@ -81,12 +87,12 @@ server <- function(input, output) {
         geom_stream(aes(x=date, y=casesroll, fill=ageband), bw=0.2)+
         scale_fill_paletteer_d("awtools::a_palette", name="Age")+
         scale_x_date(name="", limits=c(StartDate, NA))+
-        scale_y_continuous(name=" Daily cases per 100,000")+
+        scale_y_continuous(name=" Daily cases per 100,000", labels=abs, position="right")+
         theme_classic()+
         theme(plot.title=element_text(face="bold"))+
         labs(title=paste("Age patterns in COVID-19 cases in", LA),
              subtitle="Rolling 7-day average of confirmed new cases by age group",
-             caption="Date from Public Health England | Plot by @VictimOfMaths")
+             caption="Data from Public Health England | Plot by @VictimOfMaths\nDOI: 10.15131/shef.data.13158122")
     }
     p     
   })
