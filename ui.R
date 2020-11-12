@@ -1,29 +1,37 @@
 library(shiny)
-library(ggplot2)
+library(lubridate)
 
-#A clever person would make use of global.R instead of reading this in here as well as
-#in server.R
-cases <- read.csv("LACases.csv")
-
-ui <- fluidPage(
+#Remove blue fill from date slider
+ui <- fluidPage(tags$style(
+  ".irs-bar {",
+  "  border-color: transparent;",
+  "  background-color: transparent;",
+  "}",
+  ".irs-bar-edge {",
+  "  border-color: transparent;",
+  "  background-color: transparent;",
+  "}"
+),
   
-  titlePanel("Visualising Local Authority COVID-19 deaths/cases data"),
+  titlePanel("Visualising age patterns in English Local Authority COVID-19 case data"),
   
   sidebarPanel(
     
-    selectInput('LA', 'Select Nation or Local Authority', c("England", "Scotland", "Wales", "Northern Ireland",
-                                                            sort(as.character(unique(cases$name))), multiple=FALSE,
-                selected="England")),
-    selectInput('plottype', 'Select plot', c("Total excess deaths (GB only)"=1,"Excess deaths by cause (GB only)"=2,"Excess deaths by location (GB only)"=3,
-                                             "Cases vs deaths (GB only)"=4, "Case numbers"=5, 
-                                             "Compare case rates"=6, "Compare case numbers"=7,
-                                             "Hospital admission/death numbers (Eng only)"=8, 
-                                             "Compare Hospital admission rates (Eng only)"=9,
-                                             "Compare Hospital death rates (Eng only)"=10)),
-    checkboxInput('censoring', "Censor incomplete case data\n(remove most recent 3 days' figures, which are heavily underreported)",
-                  TRUE),
-    radioButtons('scale', "Select y-axis scale for case plots", choices=c("Linear", "Log"), inline=TRUE)
-  ),
+    selectInput('LA', 'Select Area', 
+                c("England", "East of England", "East Midlands", "London", "North East",
+                  "North West", "South East", "South West", "West Midlands",
+                  "Yorkshire and The Humber",
+                  sort(as.character(unique(shortdata$areaName[shortdata$areaType=="ltla"])))), 
+    multiple=FALSE, selected="England"),
+  selectInput('plottype', 'Select plot', c("Heatmap of case numbers"=1,
+                                           "Heatmap of case rates"=2,
+                                           "Line chart of case rates (detailed ages)"=3,
+                                           "Line chart of case rates (broad ages)"=4, 
+                                           "Streamgraph of case numbers"=5)),
+  sliderInput('StartDate', 'Select start date for plot', min=min(shortdata$date)+days(3), 
+              max=max(shortdata$date)-days(4), value=as.Date("2020-08-01")),
+  radioButtons('scale', "Select y-axis scale for line charts", choices=c("Linear", "Log"), inline=TRUE),
+  checkboxInput('fix', "Select to fix y-axis scales to be the same for all plots", FALSE)),
   
   mainPanel(
     plotOutput('plot')

@@ -15,6 +15,7 @@ data <- read_csv("data.csv", col_types="icccDciciddd") %>%
                                         "40-44", "45-49", "50-54", "55-59", 
                                         "60-64", "65-69", "70-74", "75-79", 
                                         "80-84", "85-89", "90+")))
+
 shortdata <- read_csv("shortdata.csv", col_types="iccccDiiddd")%>% 
   mutate(date=as.Date(date))
 
