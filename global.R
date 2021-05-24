@@ -6,6 +6,9 @@ library(RcppRoll)
 library(paletteer)
 library(ggstream)
 library(lubridate)
+library(ragg)
+
+options(shiny.useragg=TRUE)
 
 #Read in data created by https://github.com/VictimOfMaths/COVID-19/blob/master/Heatmaps/COVIDPHECasesxAgev2.R
 data <- read_csv("data.csv", col_types="icccDciciddd") %>% 

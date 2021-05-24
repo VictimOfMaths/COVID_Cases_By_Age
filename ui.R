@@ -2,7 +2,9 @@ library(shiny)
 library(lubridate)
 
 #Remove blue fill from date slider
-ui <- fluidPage(tags$style(
+ui <- fluidPage(
+  tags$head(tags$style(HTML('* {font-family: "Lato"};'))),
+  tags$style(
   ".irs-bar {",
   "  border-color: transparent;",
   "  background-color: transparent;",
