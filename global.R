@@ -10,8 +10,10 @@ library(ragg)
 
 options(shiny.useragg=TRUE)
 
+load("Alldata.RData")
+
 #Read in data created by https://github.com/VictimOfMaths/COVID-19/blob/master/Heatmaps/COVIDPHECasesxAgev2.R
-data <- read_csv("data.csv", col_types="icccDciciddd") %>% 
+data <- data1 %>% 
   mutate(date=as.Date(date), age = age %>%
                         factor(levels=c("0-4", "5-9", "10-14", "15-19",
                                         "20-24", "25-29", "30-34", "35-39", 
@@ -19,7 +21,7 @@ data <- read_csv("data.csv", col_types="icccDciciddd") %>%
                                         "60-64", "65-69", "70-74", "75-79", 
                                         "80-84", "85-89", "90+")))
 
-shortdata <- read_csv("shortdata.csv", col_types="iccccDiiddd")%>% 
+shortdata <- data3 %>% 
   mutate(date=as.Date(date))
 
 
