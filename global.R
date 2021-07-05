@@ -12,6 +12,8 @@ options(shiny.useragg=TRUE)
 
 load("Alldata.RData")
 
+rm(data2)
+
 #Read in data created by https://github.com/VictimOfMaths/COVID-19/blob/master/Heatmaps/COVIDPHECasesxAgev2.R
 data <- data1 %>% 
   mutate(date=as.Date(date), age = age %>%

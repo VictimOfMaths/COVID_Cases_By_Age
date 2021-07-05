@@ -115,12 +115,18 @@ server <- function(input, output) {
     }
     
     if (input$plottype == 5){
-      caselimit=if_else(input$fix==TRUE, maxcases, NA_real_)
+      caselimit <- if_else(input$fix==TRUE, maxcases, NA_real_)
+      datelength <- as.integer(max(shortdata$date)-StartDate)
+      bw <- case_when(
+        datelength>180 ~ 0.2,
+        datelength>80 ~ 0.4, 
+        TRUE ~ 0.6)
+      
       p <- shortdata %>% 
         filter(areaType %in% c("ltla", "nation", "region") & areaName==LA & !is.na(casesroll) & 
                  date>=as.Date(StartDate)) %>% 
         ggplot()+
-        geom_stream(aes(x=date, y=casesroll, fill=ageband), bw=0.2)+
+        geom_stream(aes(x=date, y=casesroll, fill=ageband), bw=bw)+
         scale_fill_paletteer_d("awtools::a_palette", name="Age")+
         scale_x_date(name="",)+
         scale_y_continuous(name="Daily cases", labels=abs, position="right",
